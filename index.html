@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Knock, Knock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=20260703-26" />
+  </head>
+  <body>
+    <main class="stage" aria-live="polite">
+      <header class="masthead">
+        <div>
+          <h1>KNOCK, KNOCK</h1>
+          <p class="kicker">Anti-Doomscrolling-Interventions</p>
+        </div>
+        <button class="info-button" id="infoButton" type="button">Info</button>
+        <p class="counter" id="counter" aria-label="Projekt 1 von 12"></p>
+      </header>
+
+      <section class="viewer" aria-label="Prototyp-Präsentation">
+        <button class="nav-button nav-button--prev" id="prevButton" type="button" aria-label="Vorheriger Prototyp">
+          <span aria-hidden="true"></span>
+        </button>
+
+        <article class="phone-wrap">
+          <div class="phone" id="phone">
+            <div class="phone-speaker" aria-hidden="true"></div>
+            <div class="screen" id="screen"></div>
+          </div>
+          <img class="prototype-badge" id="prototypeBadge" src="Assets/try_badge.png?v=20260703-20" alt="" aria-hidden="true" />
+        </article>
+
+        <button class="nav-button nav-button--next" id="nextButton" type="button" aria-label="Nächster Prototyp">
+          <span aria-hidden="true"></span>
+        </button>
+      </section>
+
+      <footer class="meta">
+        <div>
+          <h2 id="studentName">Anika</h2>
+          <p id="semester">Semester 06</p>
+        </div>
+        <div class="actions">
+          <div class="media-tabs" id="mediaTabs" aria-label="Ansichten"></div>
+          <a class="file-link" id="figLink" href="Anika.fig">.fig</a>
+        </div>
+      </footer>
+    </main>
+
+    <div class="info-modal" id="infoModal" aria-hidden="true">
+      <button class="modal-backdrop" id="modalBackdrop" type="button" aria-label="Info schließen"></button>
+      <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <header class="modal-header">
+          <div>
+            <h2 id="modalTitle">KNOCK, KNOCK</h2>
+            <p>Anti-Doomscrolling-Interventions</p>
+          </div>
+          <button class="modal-close" id="modalClose" type="button" aria-label="Info schließen">Close Info</button>
+        </header>
+        <div class="modal-copy">
+          <p>
+      
+            In einem 5-Wochen-Sprint entwarfen die Studierenden des Moduls "Netz & Erzählung" kleine Anti-Automatismus-Interventionen, 
+            die das Zombie-Dasein bei der Smartphone-Nutzung stoppen. Umgesetzt wurden die Prototypen mithilfe von Figma und Protopie.
+          </p>
+          <p>
+            Digitale Automatismen bezeichnen unbewusste Mikro-Handlungen, die durch wiederholte Interaktion mit Technologie entstehen. 
+            Social-Media-Plattformen nutzen Modelle wie Infinite Scroll, Auto Play und Notification Badges, um 
+            unbewusste Verhaltensmuster und Phänomene wie Fomo, Habit Loop und Popcorn Brain zu provozieren und zu verstärken.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <script src="script.js?v=20260703-26"></script>
+  </body>
+</html>
