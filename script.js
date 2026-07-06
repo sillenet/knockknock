@@ -9,7 +9,7 @@ const prototypes = [
   },
   {
     name: "Julia Schröter",
-    semester: "Sem 04",
+    semester: "Sem 06",
     file: "Julia.fig",
     platform: "figma",
     device: "standard",
@@ -53,7 +53,7 @@ const prototypes = [
     semester: "Sem 06",
     platform: "protopie",
     device: "standard",
-    protopieZoom: 1.08,
+    protopieZoom: 1.02,
     protopieOffsetY: "0px",
     preloadOnLeave: true,
     preloadOnStart: true,
@@ -112,6 +112,14 @@ let touchStartX = 0;
 const prototypeViews = [];
 let phoneSettlingTimer;
 
+function applyMuteParams(parsedUrl) {
+  parsedUrl.searchParams.set("muted", "true");
+  parsedUrl.searchParams.set("mute", "true");
+  parsedUrl.searchParams.set("sound", "false");
+  parsedUrl.searchParams.set("audio", "false");
+  parsedUrl.searchParams.set("autoplay", "false");
+}
+
 function toFigmaEmbedUrl(item) {
   const { url } = item;
   if (!url) return "";
@@ -135,6 +143,7 @@ function toFigmaEmbedUrl(item) {
   parsedUrl.searchParams.set("hide-ui", "1");
   parsedUrl.searchParams.set("show-proto-sidebar", "false");
   parsedUrl.searchParams.set("disable-default-keyboard-nav", "true");
+  applyMuteParams(parsedUrl);
 
   return parsedUrl.toString();
 }
@@ -154,6 +163,7 @@ function toProtoPieEmbedUrl(url) {
     parsedUrl.searchParams.set("displayMockup", "false");
     parsedUrl.searchParams.set("hotspotHints", "false");
     parsedUrl.searchParams.set("cursorType", "touch");
+    applyMuteParams(parsedUrl);
   }
 
   return parsedUrl.toString();
@@ -198,7 +208,7 @@ function createPrototypeView(item, index) {
   iframe.title = `${item.name} Prototyp`;
   iframe.loading = "eager";
   iframe.scrolling = item.lockDrag ? "no" : "auto";
-  iframe.allow = "camera *; microphone *; fullscreen *; clipboard-read; clipboard-write; accelerometer; gyroscope";
+  iframe.allow = "camera *; microphone *; fullscreen *; clipboard-read; clipboard-write; accelerometer; gyroscope; autoplay 'none'";
   iframe.setAttribute("allowusermedia", "true");
   iframe.allowFullscreen = true;
   const markLoaded = () => {
@@ -323,6 +333,14 @@ function getBadgeType(item) {
   return name.includes("linh") || name.includes("lina") ? "video" : "try";
 }
 
+function restartBadgeAnimation() {
+  prototypeBadge.classList.remove("is-entering");
+  void prototypeBadge.offsetWidth;
+  window.requestAnimationFrame(() => {
+    prototypeBadge.classList.add("is-entering");
+  });
+}
+
 function renderBadge(item) {
   const badgeType = getBadgeType(item);
 
@@ -330,11 +348,7 @@ function renderBadge(item) {
   prototypeBadge.src = badgeAssets[badgeType];
   prototypeBadge.alt = "";
 
-  prototypeBadge.classList.remove("is-entering");
-  void prototypeBadge.offsetWidth;
-  window.requestAnimationFrame(() => {
-    prototypeBadge.classList.add("is-entering");
-  });
+  restartBadgeAnimation();
 }
 
 function render() {
@@ -345,6 +359,7 @@ function render() {
   phone.dataset.device = item.device || "standard";
   phone.dataset.prototype = item.name.toLowerCase();
   phone.classList.toggle("phone--protopie", item.platform === "protopie");
+  phone.classList.toggle("phone--video-only", getBadgeType(item) === "video");
   window.clearTimeout(phoneSettlingTimer);
   if (item.platform === "protopie" && !item.showImmediately) {
     phone.classList.add("phone--settling");
@@ -387,6 +402,18 @@ document.addEventListener("touchstart", (event) => {
 document.addEventListener("touchend", (event) => {
   const distance = event.changedTouches[0].clientX - touchStartX;
   if (Math.abs(distance) > 52) move(distance > 0 ? -1 : 1);
+});
+
+screen.addEventListener("mouseenter", () => {
+  if (getBadgeType(prototypes[activeIndex]) === "video") {
+    restartBadgeAnimation();
+  }
+});
+
+screen.addEventListener("pointerdown", () => {
+  if (getBadgeType(prototypes[activeIndex]) === "video") {
+    restartBadgeAnimation();
+  }
 });
 
 function openInfo() {
