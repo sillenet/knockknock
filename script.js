@@ -102,8 +102,8 @@ const modalBackdrop = document.querySelector("#modalBackdrop");
 const modalClose = document.querySelector("#modalClose");
 
 const badgeAssets = {
-  try: "Assets/try_badge.png?v=20260703-20",
-  video: "Assets/video_badge.png?v=20260703-20",
+  try: "Assets/try_badge.png?v=20260707-04",
+  video: "Assets/video_badge.png?v=20260707-04",
 };
 
 const totalProjectSlots = 12;
